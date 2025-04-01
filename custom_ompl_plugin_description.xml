@@ -1,0 +1,9 @@
+<library path="lib/libmoveit_custom_objective_plugin_core">
+  <class name="moveit_custom_objective_plugin/CustomOmplPlannerManager"
+         type="moveit_custom_objective_plugin::CustomOmplPlannerManager"
+         base_class_type="planning_interface::PlannerManager">
+    <description>
+      Wraps MoveIt's OMPLInterface to inject a custom objective.
+    </description>
+  </class>
+</library>
