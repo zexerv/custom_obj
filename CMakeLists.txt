@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 find_package(ompl REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system) # For pluginlib
+find_package(Eigen3 REQUIRED) # <<< ADDED Find Eigen3
 
 # --- DEBUG MESSAGES (Keep these) ---
 message(STATUS "DEBUG (${PROJECT_NAME}): catkin_INCLUDE_DIRS = ${catkin_INCLUDE_DIRS}")
@@ -25,8 +26,8 @@ message(STATUS "DEBUG (${PROJECT_NAME}): Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DI
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}_core # Library name changed
-  CATKIN_DEPENDS roscpp pluginlib moveit_core moveit_ros_planning moveit_planners_ompl tf2_eigen eigen_conversions
-  DEPENDS Boost ompl
+  CATKIN_DEPENDS roscpp pluginlib moveit_core moveit_ros_planning moveit_planners_ompl tf2_eigen eigen_conversions 
+  DEPENDS Boost ompl Eigen3
 )
 
 # Include directories
@@ -36,14 +37,19 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${ompl_INCLUDE_DIRS}
   ${EIGEN_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS} # <<< Ensure this is present
+
 )
 
 # Build the shared library
 add_library(${PROJECT_NAME}_core src/custom_ompl_planner_manager.cpp)
+
 target_link_libraries(${PROJECT_NAME}_core
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
   ${ompl_LIBRARIES}
+  ${EIGEN3_LIBRARIES} # <<< ADDED Eigen3 libs
+
 )
 set_target_properties(${PROJECT_NAME}_core PROPERTIES OUTPUT_NAME "moveit_custom_objective_plugin_core")
 install(FILES custom_ompl_plugin_description.xml

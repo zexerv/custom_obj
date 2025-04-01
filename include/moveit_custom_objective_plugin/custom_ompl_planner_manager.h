@@ -6,8 +6,9 @@
 #include <moveit/robot_model/robot_model.h>
 #include <moveit_msgs/MotionPlanRequest.h>
 #include <moveit_msgs/MoveItErrorCodes.h>
-#include <moveit/planning_scene/planning_scene.h> // Corrected include path
+#include <moveit/planning_scene/planning_scene.h>
 #include <string>
+#include <vector> // <<< Include vector
 #include <map>
 #include <memory>
 #include <ros/ros.h>
@@ -24,8 +25,11 @@ public:
     bool initialize(const robot_model::RobotModelConstPtr& model, const std::string& ns) override;
     std::string getDescription() const override;
 
-    // *** Temporarily removed 'override' keyword ***
-    void getPlannerConfigurations(planning_interface::PlannerConfigurationMap& configs) const /* override */;
+    // --- REMOVED getPlannerConfigurations ---
+    // void getPlannerConfigurations(planning_interface::PlannerConfigurationMap& planner_configs) const; 
+
+    // --- ADDED getPlanningAlgorithms ---
+    void getPlanningAlgorithms(std::vector<std::string>& algs) const override;
 
     planning_interface::PlanningContextPtr getPlanningContext(const planning_scene::PlanningSceneConstPtr& planning_scene,
                                                               const planning_interface::MotionPlanRequest& req,
