@@ -36,13 +36,17 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${ompl_INCLUDE_DIRS}
+  /opt/ros/noetic/include/ompl-1.6 # <<< ADD THIS LINE EXPLICITLY
   ${EIGEN_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS} # <<< Ensure this is present
 
 )
 
 # Build the shared library
-add_library(${PROJECT_NAME}_core src/custom_ompl_planner_manager.cpp)
+add_library(${PROJECT_NAME}_core 
+              src/custom_ompl_planner_manager.cpp
+              src/pose_goal_region.cpp  # <-- ADD THIS LINE
+)
 
 target_link_libraries(${PROJECT_NAME}_core
   ${catkin_LIBRARIES}
